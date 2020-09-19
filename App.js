@@ -8,11 +8,11 @@ import ContatoInput from "./components/ContatoInput";
 export default function App() {
   
   const [contatos, setContatos] = useState([]);
-  const [contadorContatos, setContadorContatos] = useState(0);
+  const [contadorContatos, setContadorContatos] = useState(10);
 
   const adicionarContato = (contato) => {
     setContatos(contatos => {
-      setContadorContatos(contadorContatos + 1);
+      setContadorContatos(contadorContatos + 2);
 
       return [...contatos, {key: contadorContatos.toString(), value: contato}];
     });
