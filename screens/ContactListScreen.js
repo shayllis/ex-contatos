@@ -3,36 +3,31 @@ import { View, StyleSheet, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import HeaderBtn from '../components/HeaderBtn';
+import { useSelector } from 'react-redux';
+import ContactItem from '../components/ContactItem';
+import * as contactActions from '../store/contact-actions';
+import { useDispatch } from 'react-redux';
 
 const ContactListScreen = (props) => {
-    const [contatos, setContatos] = useState([]);
-    const [contadorContatos, setContadorContatos] = useState(0);
+    const dispatch = useDispatch();
 
-    const addContato = (contato) => {
-      setContatos(contatos => {
-        setContadorContatos(contadorContatos + 2);
+    const contacts = useSelector(state => state.contacts.contacts);
 
-        return [...contatos, {key: contadorContatos.toString(), value: contato}];
-      });
-    }
-
-    const removeItem = (key) => {
-      setContatos(contatos => {
-        return contatos.filter((contatos) => {
-          return contatos.key !== key;
-        })
-      });
+    const removeItem = id => {
+      dispatch(contactActions.deleteContact(id));
     }
 
     return (
         <View style={styles.telaPrincipal}>
             <FlatList
-                data={contatos}
-                renderItem={(contatos) => (
-                    <ReminderItem
-                    contato={contatos.item.value}
-                    chave={contatos.item.key}
-                    onDelete={removeItem}
+                data={contacts}
+                renderItem={(contact) => (
+                    <ContactItem
+                    id={contact.item.id}
+                        image={contact.item.imageURI}
+                        name={contact.item.name}
+                        phone={contact.item.phone}
+                        onRemoveItem={removeItem}
                     />
                 )
             } />

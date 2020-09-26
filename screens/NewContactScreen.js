@@ -1,11 +1,16 @@
 import React, {useState} from 'react';
 import { View, TextInput, StyleSheet, OpaqueColorValue, Button, AsyncStorage } from 'react-native';
 import Theme from '../constants/Theme';
+import CaptureImage from '../components/CaptureImage';
+import { useDispatch } from 'react-redux';
+import * as contactActions from '../store/contact-actions';
 
-const NewContactScreen = (props, navigation) => {
-    console.log(props);
+const NewContactScreen = (props) => {
+    const dispatch = useDispatch();
+
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
+    const [imageURI, setImageURI] = useState();
 
     const captureName = (name) => {
         setName(name);
@@ -16,19 +21,25 @@ const NewContactScreen = (props, navigation) => {
     };
 
     const addContact = () => {
-        // if (name.length && phone.length) {
-            // await AsyncStorage.setItem('contact', name);
-            // await AsyncStorage.setItem('contact', {
-            //     name: name,
-            //     phone: phone
-            // });
-            navigation.state.params.callback(name)
-            navigation.goBack();
-        // }
+        dispatch(contactActions.addContact(name, phone, imageURI));
+
+        setName('');
+        setPhone('');
+
+        props.navigation.goBack();
+
+        props.navigation.goBack();
     };
+
+    const pictureTaken = image => {
+        setImageURI(image);
+    }
 
     return (
         <View style={styles.mainView}>
+            <CaptureImage
+                onPictureTaken={pictureTaken}
+            />
             <TextInput
                 placeholder='Nome'
                 style={styles.textInput}
