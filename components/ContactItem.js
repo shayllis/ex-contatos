@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         backgroundColor: '#ccc',
-        borderRadius: '50%'
+        borderRadius: 35
     },
     infoContainer: {
         marginLeft: 30,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -11,7 +11,11 @@ import { useDispatch } from 'react-redux';
 const ContactListScreen = (props) => {
     const dispatch = useDispatch();
 
-    const contacts = useSelector(state => state.contacts.contacts);
+    useEffect(() => {
+        dispatch( (contactActions.listContacts()) );
+    });
+
+    const contacts = useSelector(state => state.contacts.contacts );
 
     const removeItem = id => {
       dispatch(contactActions.deleteContact(id));
@@ -21,6 +25,7 @@ const ContactListScreen = (props) => {
         <View style={styles.telaPrincipal}>
             <FlatList
                 data={contacts}
+                keyExtractor={contacts => contacts.id}
                 renderItem={(contact) => (
                     <ContactItem
                     id={contact.item.id}

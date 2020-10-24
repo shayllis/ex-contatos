@@ -7,10 +7,19 @@ import {
   combineReducers,
   applyMiddleware
 } from 'redux';
+import {init} from './helpers/db';
 
 import { Provider } from 'react-redux';
 import reduxThunk from 'redux-thunk';
 import contactsReducers from './store/contact-reducers';
+
+init()
+  .then(() => {
+    console.log('Okkk');
+  })
+  .catch(err => {
+    console.log(`Not Ok ${err}`);
+  });
 
 const rootReducer = combineReducers({ 
   contacts: contactsReducers
@@ -24,7 +33,6 @@ export default function App() {
       <NavContacts />
     </Provider>
   );
-
 }
 
 const styles = StyleSheet.create({

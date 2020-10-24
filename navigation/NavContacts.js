@@ -16,9 +16,9 @@ const NavContacts = createStackNavigator({
 }, {
     defaultNavigationOptions: {
         headerStyle: {
-            backGroundColor: Platform.OS === 'android' ? Theme.primary : 'white'
+            backGroundColor: Platform.OS === 'android' ? 'white' : Theme.primary
         },
-        headerTintColor: Platform.OS === 'android' ? 'white' : Theme.primary
+        headerTintColor: Theme.primary
     }
 });
 
